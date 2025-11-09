@@ -1,0 +1,469 @@
+:root {
+    --card-width: clamp(20rem, 25vw, 30rem);
+}
+
+.card-invitation {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* Khi ảnh nền đã tải xong, hiển thị trang */
+.card-invitation.loaded {
+    opacity: 1;
+}
+
+/* Ẩn hiệu ứng khi trang đang tải */
+.card-invitation:not(.loaded) {
+    visibility: hidden;
+}
+
+.card-invitation {
+    background-image: url("../../assets/img/bg-thiep.jpeg");
+    box-sizing: border-box;
+    display: flex;
+    min-height: 100vh;
+    min-width: 100dvw;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    font-family: "Dancing Script", cursive;
+    font-style: italic;
+
+
+    /* CSS reset */
+    *,
+    *::after,
+    *::before {
+        box-sizing: inherit;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    /* Typography =======================*/
+
+    /* Headings */
+
+    /* Main heading for card's front cover */
+    .card-front__heading {
+        font-size: 1.5rem;
+        margin-top: .25rem;
+    }
+
+    /* Main heading for inside page */
+    .inside-page__heading {
+        padding-bottom: 1rem;
+        width: 100%;
+    }
+
+    /* Mixed */
+
+    /* For both inside page's main heading and 'view me' text on card front cover */
+    .inside-page__heading,
+    .card-front__text-view {
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin-top: .2rem;
+    }
+
+
+    .inside-page__heading--beach,
+    .card-front__text-view--beach {
+        color: #fa7f67;
+    }
+
+    .inside-page-heading {
+        font-size: .8rem;
+        color: rgba($color: #fff, $alpha: 0.7);
+    }
+
+    .inside-page-name {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+    }
+
+    .inside-page-date {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+    }
+
+
+    /* Front cover */
+
+    .card-front__tp {
+        color: #fafbfa;
+    }
+
+    /* For pricing text on card front cover */
+    .card-front__text-price {
+        font-size: 1.2rem;
+        margin-top: -.2rem;
+    }
+
+    /* Back cover */
+
+    /* For inside page's body text */
+    .inside-page__text {
+        color: #333;
+    }
+
+    /* Icons ===========================================*/
+
+    .card-front__icon {
+        fill: #fafbfa;
+        font-size: 3vw;
+        height: 3.25rem;
+        margin-top: -.5rem;
+        width: 3.25rem;
+    }
+
+    /* Buttons =================================================*/
+
+    .inside-page__btn {
+        background-color: transparent;
+        border: 3px solid;
+        border-radius: .5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        overflow: hidden;
+        padding: .7rem .75rem;
+        position: relative;
+        text-decoration: none;
+        transition: all .3s ease;
+        width: 90%;
+        z-index: 10;
+    }
+
+    .inside-page__btn::before {
+        content: "";
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transform: scaleY(0);
+        transition: all .3s ease;
+        width: 100%;
+        z-index: -1;
+    }
+
+    .inside-page__btn--beach {
+        border-color: #fa7f67;
+        color: #fa7f67;
+    }
+
+    .inside-page__btn--beach::before {
+        background-color: blue;
+    }
+
+
+    .inside-page__btn:hover {
+        color: #fafbfa;
+    }
+
+    .inside-page__btn:hover::before {
+        transform: scaleY(1);
+    }
+
+    /* Layout Structure=========================================*/
+
+
+    /* Container to hold all cards in one place */
+    .card-area {
+        align-items: center;
+        display: flex;
+        flex-wrap: nowrap;
+        height: 100%;
+        justify-content: space-evenly;
+        padding: 1rem;
+    }
+
+    /* Card ============================================*/
+
+    /* Area to hold an individual card */
+    .card-section {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* A container to hold the flip card and the inside page */
+    .card {
+        // box-shadow: -.1rem 1.7rem 6.6rem -3.2rem rgba(0, 0, 0, 0.5);
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        min-height: 500px;
+        height: 75dvh;
+        position: relative;
+        transition: all 1s ease;
+        width: var(--card-width);
+        border-radius: 1.5rem;
+        cursor: pointer;
+
+    }
+
+    /* Flip card - covering both the front and inside front page */
+
+    /* An outer container to hold the flip card. This excludes the inside page */
+    .flip-card {
+        height: 100%;
+        perspective: 100rem;
+        position: absolute;
+        right: 0;
+        transition: all 1s ease;
+        visibility: hidden;
+        width: var(--card-width);
+        z-index: 100;
+
+    }
+
+    /* The outer container's visibility is set to hidden. This is to make everything within the container NOT set to hidden  */
+    /* This is done so content in the inside page can be selected */
+    .flip-card>* {
+        visibility: visible;
+    }
+
+    /* An inner container to hold the flip card. This excludes the inside page */
+    .flip-card__container {
+        height: 100%;
+        position: absolute;
+        right: 0;
+        transform-origin: left;
+        transform-style: preserve-3d;
+        transition: all 1s ease;
+        width: 100%;
+        // background-color: white;
+        border-radius: 1.6rem;
+
+    }
+
+    .card-front,
+    .card-back {
+        backface-visibility: hidden;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+
+    }
+
+    /* Styling for the front side of the flip card */
+
+    /* container for the front side */
+
+    .card-front {
+        height: 100%;
+        width: var(--card-width);
+        // background-color: white
+        border-radius: 1.4rem;
+        background-image: url("../../assets/img/thiep_cuoi.jpg");
+        background-size: cover;
+        background-position: center;
+        z-index: 2;
+
+    }
+
+    .card-back {
+        transform: rotateY(180deg);
+        z-index: 1;
+        background-image: url("../../assets/img/nen_thiep.jpeg");
+        background-size: cover;
+        background-position: center;
+        border-radius: 1.6rem;
+        display: flex;
+        padding: .5rem;
+    }
+
+    .card-back-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(214, 49, 46, 0.2);
+        border-radius: 1.6rem;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .card-back-img {
+        display: flex;
+        justify-content: center;
+        border-width: 15px;
+        border-color: white;
+        border-style: double;
+        border-top-left-radius: 100px;
+        border-top-right-radius: 100px;
+        width: 100%;
+        height: 80%;
+        overflow: hidden;
+
+        img {
+
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .card-back-content {
+        height: 10%;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    /* Front card's bottom section */
+    .card-front__bt {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+    }
+
+    /* Inside page */
+
+    .inside-page {
+        // background-color: rgb(173, 22, 19);
+        background-image: url("../../assets/img/nen_thiep.jpeg");
+        background-size: contain;
+        border-radius: 1.6rem;
+        // box-shadow: inset 20rem 0px 5rem -2.5rem rgba(0, 0, 0, 0.25);
+        height: 100%;
+        // padding: 1rem;
+        position: absolute;
+        right: 0;
+        transition: all 1s ease;
+        width: var(--card-width);
+        z-index: 1;
+        padding: .5rem;
+    }
+
+    .inside-page__container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        text-align: center;
+        width: 100%;
+        background-color: rgba(214, 49, 46, 0.2);
+        border-radius: 1.6rem;
+
+    }
+
+    .inside-page__container_content {
+        display: flex;
+        flex-direction: column;
+        padding: .5rem .5rem .2rem .5rem;
+        gap: 1rem;
+        height: 100%;
+    }
+
+    .card-back-content__text {
+        color: rgba($color: #fff, $alpha: 0.7);
+
+    }
+
+
+    .inside-page__left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+    }
+
+    .inside-page__right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .inside-page-text {
+        color: rgba($color: #fff, $alpha: 0.7);
+    }
+
+    .inside-page-name {
+        font-weight: bold;
+        color: white;
+    }
+
+    // .inside-page::before {
+    //     content: "";
+    //     position: absolute;
+    //     left: 0;
+    //     /* Đặt sát cạnh trái */
+    //     top: 20px;
+    //     height: 92%;
+    //     width: 1px;
+    //     background: repeating-linear-gradient(transparent 0px,
+    //             transparent 2px,
+    //             white 2px,
+    //             white 4px);
+    //     /* Giả lập dashed line */
+    // }
+
+    .inside-page__center {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inside-page__center_name {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inside-page__center_name_ten {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+
+    }
+
+
+    /* Functionality ====================================*/
+
+    /* This is to keep the card centered (within its container) when opened */
+    .card:hover {
+        // box-shadow:
+        //     -.1rem 1.7rem 6.6rem -3.2rem rgba(0, 0, 0, 0.75);
+        box-shadow: none;
+        width: clamp(60rem, 25vw + 5rem, 70rem);
+    }
+
+    /* When the card is hovered, the flip card container will rotate */
+    .card:hover .flip-card__container {
+        transform: rotateY(-180deg);
+    }
+
+    /* When the card is hovered, the shadow on the inside page will shrink to the left */
+    // .card:hover .inside-page {
+    //     // box-shadow: inset 1rem 0px 5rem -2.5rem rgba(0, 0, 0, 0.1);
+    // }
+
+    .card-more {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+        color: rgba($color: #fff, $alpha: 0.6);
+        font-size: .8rem;
+    }
+
+    @keyframes bounceOncePerSecond {
+        0% { transform: translateX(0); }
+        20% { transform: translateX(-5px); }
+        40% { transform: translateX(0); }
+        100% { transform: translateX(0); }
+    }
+    
+    .card-more-bounce {
+        gap: 8px;
+        animation: bounceOncePerSecond 1s infinite;
+    }
+}

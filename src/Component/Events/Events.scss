@@ -1,0 +1,128 @@
+.events {
+    min-height: 100dvh;
+    width: 100%;
+    display: flex;
+    margin-bottom: 30px;
+
+    .events-content {
+        display: flex;
+        width: 100%;
+        min-height: 100dvh;
+        padding: 0px 10px 0px 10px;
+        flex-direction: column;
+
+        .events-header-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+
+            .events-header-title {
+                margin-bottom: 50px;
+                font-size: CLAMP(1.5rem, 2.5vw + 1rem, 5rem);
+                font-weight: 700;
+                text-align: center;
+                //background: linear-gradient(25deg, #800000 5%, rgba(255, 255, 255, 0) 92%);
+                // background-image: linear-gradient(360deg, #fff 5%, rgba(128, 0, 0, 0.55) 92%);
+                background-color: #6b4b4b;
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+
+                // @media screen and (max-width: 900px) {
+                //     background: linear-gradient(360deg, rgba(255, 255, 255, 0.86) 5%, #800000 92%);
+                //     background-clip: text;
+                //     -webkit-background-clip: text;
+                //     -webkit-text-fill-color: transparent;
+
+                // }
+
+            }
+        }
+
+        .events-img {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            // flex-wrap: wrap;
+            flex: 2;
+
+            @media screen and (min-width: 900px) {
+                flex-direction: row;
+            }
+
+            .events-img-container {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+
+                .events-img-container-img {
+                    display: flex;
+                    // justify-content: center;
+                    align-items: flex-end;
+                    flex: 1;
+
+                    .events-img-number-border {
+                        border: 2px solid white;
+                        border-radius: 150px;
+                        padding: 5px;
+                        display: flex;
+                        position: relative;
+
+                        .events-img-number {
+                            width: 200px;
+                            height: 450px;
+                            object-fit: cover;
+                            border-radius: 150px;
+                            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+                        }
+
+                        .event-img-title {
+                            position: absolute;
+                            bottom: -40px;
+                            right: -40px;
+                            // font-size: CLAMP(2.5rem, 3vw + 2.4rem, 6rem);
+                            font-size: 5rem;
+                            font-weight: 600;
+                            color: #6b4b4b;
+                        }
+
+                        .event-img-title-right {
+                            position: absolute;
+                            bottom: -40px;
+                            left: -30px;
+                            // font-size: CLAMP(2.5rem, 3vw + 2.4rem, 6rem);
+                            font-size: 5rem;
+                            font-weight: 600;
+                            color: #6b4b4b;
+                        }
+                    }
+
+
+
+                }
+
+                .events-details {
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: 20px;
+
+                    .event-details-date {
+                        font-size: clamp(0.4rem, 2vw + 1rem, 0.8rem);
+                        // color: rgba($color: white, $alpha: 0.8);
+                        color: #6b4b4b;
+                    }
+
+                    .event-details-title {
+                        font-weight: bolder;
+                        font-size: clamp(0.6rem, 2vw + 1rem, 1rem);
+                        color: #6b4b4b;
+                    }
+                }
+            }
+        }
+    }
+
+}

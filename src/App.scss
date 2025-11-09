@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('../src/assets/fonts/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Dancing Script';
+  src: url('../src/assets/fonts/DancingScript-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-optical-sizing: auto;
+
+}
+
+@font-face {
+  font-family: 'Great Vibes';
+  src: url('../src/assets/fonts/GreatVibes-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-optical-sizing: auto;
+
+}
+
+.invitation-content {
+  // background-image: url('./assets/img/nen_moi.png');
+  // background-size: contain;
+  background: #f7f0ec
+}
+
+
+#root {
+  margin: 0 auto;
+  text-align: center;
+  width: 100dvw;
+  min-height: 100dvh;
+  // color: #800000;
+  color: white;
+  font-family: 'Playfair Display', serif;
+  overflow-x: hidden;
+}

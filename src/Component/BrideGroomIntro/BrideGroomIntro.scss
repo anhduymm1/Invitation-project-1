@@ -1,0 +1,130 @@
+.intro-container {
+  text-align: center;
+  background: #f7f0ec;
+  padding: 5px;
+  margin-bottom: 50px;
+
+  .countdown-title {
+    font-size: CLAMP(1.5rem, 3vw + 1rem, 5rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 70px;
+    //background: linear-gradient(25deg, #800000 5%, rgba(255, 255, 255, 0) 92%);
+    // background-image:  #6b4b4b;
+    color: #6b4b4b;
+    background-clip: text;
+    // -webkit-background-clip: text;
+    // -webkit-text-fill-color: transparent;
+
+    // @media screen and (max-width: 900px) {
+    //     background: linear-gradient(360deg, rgba(255, 255, 255, 0.86) 5%, #800000 92%);
+    //     background-clip: text;
+    //     -webkit-background-clip: text;
+    //     -webkit-text-fill-color: transparent;
+
+    // }
+
+  }
+
+  
+  .intro-title {
+    font-family: "Dancing Script", cursive;
+    font-size: 2.5rem;
+    color: #a45a52;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: "Great Vibes", cursive !important;
+    font-size: CLAMP(1.5rem, 2vw + 1rem, 5rem);
+    margin-bottom: 5px;
+    color: #6b4b4b;
+  }
+
+  .role {
+    font-weight: bold;
+    color: #a45a52;
+    margin-bottom: 8px;
+  }
+
+  .photo-container {
+    position: relative;
+    display: inline-block;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+    .wedding-photo {
+      width: 100%;
+      max-width: 700px;
+      display: block;
+      object-fit: cover;
+      border-radius: 20px;
+      max-height: 600px;
+    }
+  }
+
+  /* 🖥 Layout desktop */
+  .desktop-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+
+    .info {
+      // width: 200px;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  /* 📱 Layout mobile */
+  .mobile-layout {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: block;
+
+      .photo-container {
+        margin: 0 auto;
+      }
+
+      .role {
+        font-size: small;
+      }
+
+      .names-under-photo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 20px;
+
+        .name-item h2 {
+          font-size: 1.3rem;
+          color: #6b4b4b;
+        }
+
+        .heart-icon {
+          color: #e57373;
+          font-size: 1.8rem;
+          animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+          0%,
+          100% {
+            transform: scale(1);
+          }
+
+          50% {
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+  }
+}

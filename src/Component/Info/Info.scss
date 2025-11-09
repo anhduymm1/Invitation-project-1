@@ -1,0 +1,75 @@
+.Info {
+    height: 132vh;
+    color: black;
+
+    p {
+        margin: 0;
+    }
+
+    .info-container {
+        position: absolute;
+        top: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+        /* Kéo ngược lại 1 nửa để chính giữa */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 10;
+        background-color: #f7f0ec;
+        max-width: 400px;
+        padding: 10px;
+        width: 85%;
+        border-radius: 20px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    .info-container img {
+        display: block;
+        margin: 0 auto;
+        height: 60px;
+        object-fit: contain;
+    }
+
+    .info-container p {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #5a4a42;
+    }
+
+    .info-container span {
+        display: block;
+        font-size: 22px;
+        color: #b76e79;
+        font-weight: 600;
+    }
+
+    .anh-chinh {
+        width: 100%;
+        height: 80vh;
+    }
+
+    @media (min-width: 768px) {
+        height: 150vh;
+
+        .anh-chinh {
+            width: 400px;
+            height: 90vh;
+        }
+
+        .info-container img {
+            height: 80px;
+            /* Tăng nhẹ chiều cao ảnh trên máy tính */
+        }
+
+        .info-container {
+            padding: 40px;
+            top: -100px;
+        }
+
+        .info-container span {
+            font-size: 26px;
+        }
+    }
+}

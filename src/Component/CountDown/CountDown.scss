@@ -1,0 +1,174 @@
+.countdown {
+    min-height: 100dvh;
+    width: 100%;
+    display: flex;
+
+
+    .countdown-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        flex: 1;
+        padding: 0px 10px 0px 10px;
+
+        .countdown-title {
+            font-size: CLAMP(1.5rem, 3vw + 1rem, 5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            //background: linear-gradient(25deg, #800000 5%, rgba(255, 255, 255, 0) 92%);
+            // background-image:  #6b4b4b;
+            color: #6b4b4b;
+            background-clip: text;
+            // -webkit-background-clip: text;
+            // -webkit-text-fill-color: transparent;
+
+            // @media screen and (max-width: 900px) {
+            //     background: linear-gradient(360deg, rgba(255, 255, 255, 0.86) 5%, #800000 92%);
+            //     background-clip: text;
+            //     -webkit-background-clip: text;
+            //     -webkit-text-fill-color: transparent;
+
+            // }
+            
+        }
+
+        .text-name {
+            color: #6b4b4b;
+            font-family: "Great Vibes", cursive !important;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 40px;
+            margin-top: 20px;
+        }
+
+        .countdown-day {
+            font-weight: 600;
+            color: rgba($color: white, $alpha: 0.4);
+            font-size: clamp(1rem, 2vw + 0.5rem, 1.5rem);
+        }
+
+        .countdown-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            flex: 1;
+
+
+            .countdown-box-name {
+                font-size: clamp(1.5rem, 3vw + 1.5rem, 6rem);
+                font-family: 'Dancing Script', cursive;
+                font-weight: 500;
+            }
+
+            .countdown-box-line-container {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                padding: 20px;
+
+                .line {
+                    border: none;
+                    height: 2px;
+                    background-color: #6b4b4b;
+                    width: 100%;
+                }
+            }
+
+
+            .countdown-box-number {
+                .countdown-box-number-inner {
+                    display: flex;
+                    gap: 5px;
+
+                    .number-box {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 65px;
+                        height: 90px;
+                        background-color: rgba($color: #f3d1bf, $alpha: 0.9);
+                        color: #800000;
+                        font-size: clamp(1.5rem, 3vw + 1.7rem, 4rem);
+                        font-weight: 600;
+                        position: relative;
+                        border-radius: 15px;
+                        padding-bottom: 15px;
+                    }
+
+                    .number-box-bt {
+                        display: inline-flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 70px;
+                        height: 100px;
+                        background-color: rgba($color: #f3d1bf, $alpha: 0.6);
+                        color: #800000;
+                        font-size: clamp(1.5rem, 3vw + 1.2rem, 4rem);
+                        font-weight: 600;
+                        position: relative;
+                        border-radius: 15px;
+                        padding-bottom: 15px;
+                    }
+
+                    .number-box::before {
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        border-top: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                        border-right: 10px solid #f7f0ec;
+                        bottom: calc(50% - 7.5px);
+                        right: -4px;
+                    }
+
+                    .number-box::after {
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        border-top: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                        border-left: 10px solid #f7f0ec;
+                        bottom: calc(50% - 7.5px);
+                        left: -4px;
+                    }
+
+                    .number-box-bt::before {
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        border-top: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                        border-right: 10px solid #f7f0ec;
+                        bottom: calc(50% - 7.5px);
+                        right: -4px;
+                    }
+
+                    .number-box-bt::after {
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        border-top: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                        border-left: 10px solid #f7f0ec;
+                        bottom: calc(50% - 7.5px);
+                        left: -4px;
+                    }
+                }
+
+                .label {
+                    font-size: clamp(1rem, 3vw, 1.5rem);
+                    font-weight: 800;
+                    color: rgba($color: black, $alpha: 0.7);
+                }
+            }
+
+        }
+    }
+}
