@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './InvitationCardV2.scss'
 import { PiFlowerLotusFill } from "react-icons/pi";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import bgWedding from "../../assets/img/thiep_cuoi.webp";
 import { useNavigate } from 'react-router';
 
 const InvitationCardV2 = () => {
@@ -10,7 +10,7 @@ const InvitationCardV2 = () => {
 
     useEffect(() => {
         const bgImage = new Image();
-        bgImage.src = "https://i.pinimg.com/736x/3f/d5/00/3fd500e71e77f0f1b57129bf92d2456e.jpg"; // Đường dẫn đến ảnh nền
+        bgImage.src = bgWedding; // Đường dẫn đến ảnh nền
         bgImage.onload = () => setIsLoaded(true); // Khi ảnh tải xong, hiển thị trang
     }, []);
 

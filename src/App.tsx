@@ -16,7 +16,6 @@ import 'aos/dist/aos.css';
 import MusicToggle from './Component/MusicToggle/MusicToggle'
 import WeddingSlicerSlider1 from './Component/WeddingSlicerSlider/WeddingSlicerSlider1'
 import WeddingFooter from './Component/WeddingFooter/WeddingFooter'
-import Snowfall from 'react-snowfall'
 
 AOS.init();
 function App() {
