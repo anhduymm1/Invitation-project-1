@@ -36,6 +36,16 @@ const WeddingMap = () => {
                         referrerPolicy="no-referrer-when-downgrade"
                     ></iframe>
                 </div>
+
+                 <div className="wmap-item">
+                    <h3 className="wmap-subtitle">🛕 Nhà hàng</h3>
+                    <iframe
+                        title="Nha Hang"
+                        className="wmap-iframe"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3933.942809066636!2d105.98013637407307!3d9.600193179788475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a04dd80a69b717%3A0x888ec855928e5689!2zTmjDoCBow6BuZyBExrDGoW5nIEzDoWk!5e0!3m2!1svi!2s!4v1764676046726!5m2!1svi!2s"
+                        referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                </div>
             </div>
         </div>
     );

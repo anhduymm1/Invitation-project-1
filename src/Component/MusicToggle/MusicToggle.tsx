@@ -1,168 +1,81 @@
 import React, { useEffect, useRef, useState } from "react";
-import nhac from "/nhac.mp3";
-
-/**
- * MusicAuto.jsx
- * - Thứ tự cố gắng:
- *   1) Thử audio.play() ngay (desktop hoặc browser cho phép)
- *   2) Nếu bị chặn -> tạo một <video muted autoplay playsInline loop> (data URI nhỏ)
- *      khi video bắt đầu play sẽ gọi audio.play()
- * - Lưu trạng thái bật/tắt vào localStorage
- * - Có nút bật/tắt hiển thị ở góc
- */
+import musicMp4 from "/nhac.mp4"; // file nhạc dạng video
 
 export default function MusicAuto() {
-  const audioRef = useRef(null);
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [attemptedUnlock, setAttemptedUnlock] = useState(false);
 
   useEffect(() => {
-    // Khởi tạo audio
-    const audio = new Audio(nhac);
-    audio.loop = true;
-    audioRef.current = audio;
+    const v = document.createElement("video");
+    videoRef.current = v;
 
-    let videoEl = null;
-    let cleanupVideo = false;
+    v.src = musicMp4;
+    v.loop = true;
+    v.playsInline = true;
+    v.autoplay = true;
 
-    // Try direct audio play first
-    audio.play()
-      .then(() => {
-        // Nếu play thành công (desktop hoặc browser cho phép)
-        setIsPlaying(true);
-        setAttemptedUnlock(true);
-      })
-      .catch(() => {
-        // Bị chặn -> dùng video-muted autoplay hack để unlock
-        setAttemptedUnlock(true);
+    // Bắt đầu muted để Safari cho autoplay
+    v.muted = true;
 
+    v.style.position = "fixed";
+    v.style.width = "1px";
+    v.style.height = "1px";
+    v.style.opacity = "0";
+    v.style.left = "0";
+    v.style.top = "0";
+    v.style.pointerEvents = "none";
+    v.style.zIndex = "-1";
+
+    // Khi video bắt đầu play, unmute để phát nhạc thật
+    v.addEventListener(
+      "playing",
+      () => {
         try {
-          // Một very small silent video as data URI.
-          // NOTE: một vài browser rất kén data URI, nhưng nhiều trường hợp vẫn OK.
-          const silentVideoDataUri =
-            "data:video/mp4;base64,AAAAHGZ0eXBpc29tAAAAAGlzb21pc28yYXZjMQAAABNhdmMxAAAAA3N0YmwAAABsbWRhdAAAAAU=";
-
-          videoEl = document.createElement("video");
-          videoRef.current = videoEl;
-          videoEl.muted = true;
-          videoEl.playsInline = true;
-          videoEl.autoplay = true;
-          videoEl.loop = true;
-          videoEl.src = silentVideoDataUri;
-          videoEl.style.position = "fixed";
-          videoEl.style.width = "1px";
-          videoEl.style.height = "1px";
-          videoEl.style.left = "0";
-          videoEl.style.top = "0";
-          videoEl.style.opacity = "0";
-          videoEl.style.pointerEvents = "none";
-
-          // when video starts playing -> unlock audio
-          const onVideoPlay = () => {
-            // play audio (silenced video gave permission)
-            audio.play()
-              .then(() => {
-                setIsPlaying(true);
-                // remove the video element since không cần hiển thị
-                tryRemoveVideo();
-              })
-              .catch((err) => {
-                // Nếu vẫn fail, giữ video as fallback
-                console.warn("Audio still blocked after video play:", err);
-              });
-          };
-
-          const onVideoError = (e) => {
-            console.warn("Silent video failed to play or load", e);
-          };
-
-          videoEl.addEventListener("playing", onVideoPlay, { once: true });
-          videoEl.addEventListener("error", onVideoError, { once: true });
-
-          // append to DOM to allow autoplay
-          document.body.appendChild(videoEl);
-          cleanupVideo = true;
-
-          // try to play video (some browsers require explicit play call)
-          // ignore promise rejection
-          videoEl.play().catch(() => {});
+          v.muted = false; // bật tiếng
+          v.volume = 1.0;
+          setIsPlaying(true);
         } catch (e) {
-          console.warn("Failed to create silent video fallback", e);
+          console.warn("Unmute failed:", e);
         }
-      });
+      },
+      { once: true }
+    );
 
-    // helper to remove video element
-    function tryRemoveVideo() {
-      if (videoRef.current) {
-        try {
-          videoRef.current.pause();
-          videoRef.current.removeAttribute("src");
-          if (videoRef.current.parentNode) videoRef.current.parentNode.removeChild(videoRef.current);
-        } catch (e) {
-          // ignore
-        }
-        videoRef.current = null;
-      }
-    }
+    document.body.appendChild(v);
 
-    // Cleanup on unmount
+    // Gọi play() để chắc chắn Safari kickstart
+    v.play().catch(() => {});
+
     return () => {
       try {
-        if (audioRef.current) {
-          audioRef.current.pause();
-          audioRef.current.src = "";
-          audioRef.current = null;
-        }
-        if (cleanupVideo) tryRemoveVideo();
-      } catch (e) {
-        // ignore
-      }
+        v.pause();
+        v.remove();
+      } catch {}
     };
   }, []);
 
-  // Toggle button
   const toggleMusic = async () => {
-    const a = audioRef.current;
-    if (!a) return;
+    const v = videoRef.current;
+    if (!v) return;
 
     if (isPlaying) {
-      a.pause();
+      v.pause();
       setIsPlaying(false);
-      localStorage.setItem("musicEnabled", "false");
     } else {
       try {
-        await a.play();
+        await v.play();
+        v.muted = false;
         setIsPlaying(true);
-        localStorage.setItem("musicEnabled", "true");
-      } catch (err) {
-        // Nếu play fail (vẫn bị chặn) — yêu cầu người dùng tap để mở
-        console.warn("Play blocked; ask user to tap to enable:", err);
-        // Hiển thị alert nhẹ (bạn có thể đổi thành modal/overlay đẹp hơn)
-        // Nhưng theo yêu cầu, ta muốn auto play — nên không prompt quá to.
-        alert("Trình duyệt đang chặn âm thanh. Hãy chạm màn hình để bật nhạc.");
+      } catch {
+        alert("Safari đang chặn âm thanh, hãy chạm màn hình.");
       }
     }
   };
 
-  // If user previously cho phép, cố play lại khi component mount
-  useEffect(() => {
-    const prev = localStorage.getItem("musicEnabled");
-    if (prev === "true" && audioRef.current && attemptedUnlock) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {
-        // ignore
-      });
-    }
-  }, [attemptedUnlock]);
-
-  // UI: floating circular button (minimal styling)
   return (
-    <>
-      <button
-        onClick={toggleMusic}
-        aria-label={isPlaying ? "Tắt nhạc" : "Bật nhạc"}
-        title={isPlaying ? "Tắt nhạc" : "Bật nhạc"}
-        style={{
+    <button
+      onClick={toggleMusic}
+      style={{
           position: "fixed",
           bottom: 20,
           left: 20,
@@ -178,9 +91,8 @@ export default function MusicAuto() {
           boxShadow: "0 6px 18px rgba(0,0,0,0.18)",
           background:  "rgba(255,255,255,0.5)",
         }}
-      >
-        {isPlaying ? "🔇" : "🎵"}
-      </button>
-    </>
+    >
+      {isPlaying ? "🔇" : "🎵"}
+    </button>
   );
 }

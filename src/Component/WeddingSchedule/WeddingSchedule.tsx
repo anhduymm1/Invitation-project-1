@@ -47,7 +47,7 @@ const WeddingSchedule = () => {
           data-aos-easing="ease-in-out"
           data-aos-mirror="true"
           data-aos-once="false"
-        >THỨ NĂM, 17.12.2025</p>
+        >THỨ TƯ, 17.12.2025</p>
 
         <div className="timeline"
           data-aos="fade-down"
