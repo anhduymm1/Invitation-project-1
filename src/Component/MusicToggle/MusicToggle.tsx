@@ -1,81 +1,72 @@
 import React, { useEffect, useRef, useState } from "react";
-import musicMp4 from "/nhac.mp4"; // file nhạc dạng video
+import musicMp3 from "/nhac.mp3";
 
 export default function MusicAuto() {
-  const videoRef = useRef(null);
+  const audioRef = useRef(null);
+  const [needTap, setNeedTap] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const v = document.createElement("video");
-    videoRef.current = v;
-
-    v.src = musicMp4;
-    v.loop = true;
-    v.playsInline = true;
-    v.autoplay = true;
-
-    // Bắt đầu muted để Safari cho autoplay
-    v.muted = true;
-
-    v.style.position = "fixed";
-    v.style.width = "1px";
-    v.style.height = "1px";
-    v.style.opacity = "0";
-    v.style.left = "0";
-    v.style.top = "0";
-    v.style.pointerEvents = "none";
-    v.style.zIndex = "-1";
-
-    // Khi video bắt đầu play, unmute để phát nhạc thật
-    v.addEventListener(
-      "playing",
-      () => {
-        try {
-          v.muted = false; // bật tiếng
-          v.volume = 1.0;
-          setIsPlaying(true);
-        } catch (e) {
-          console.warn("Unmute failed:", e);
-        }
-      },
-      { once: true }
-    );
-
-    document.body.appendChild(v);
-
-    // Gọi play() để chắc chắn Safari kickstart
-    v.play().catch(() => {});
-
-    return () => {
-      try {
-        v.pause();
-        v.remove();
-      } catch {}
-    };
+    const audio = new Audio(musicMp3);
+    audio.loop = true;
+    audioRef.current = audio;
   }, []);
 
-  const toggleMusic = async () => {
-    const v = videoRef.current;
-    if (!v) return;
+  // Khi user tap overlay
+  const unlockAudio = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    try {
+      await audio.play();
+      setIsPlaying(true);
+      setNeedTap(false);
+    } catch (e) {
+      console.warn("Audio play blocked:", e);
+    }
+  };
+
+  // Toggle nhạc
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
 
     if (isPlaying) {
-      v.pause();
+      audio.pause();
       setIsPlaying(false);
     } else {
-      try {
-        await v.play();
-        v.muted = false;
-        setIsPlaying(true);
-      } catch {
-        alert("Safari đang chặn âm thanh, hãy chạm màn hình.");
-      }
+      audio.play().catch(() => {});
+      setIsPlaying(true);
     }
   };
 
   return (
-    <button
-      onClick={toggleMusic}
-      style={{
+    <>
+      {/* Overlay yêu cầu user tap lần đầu */}
+      {needTap && (
+        <div
+          onClick={unlockAudio}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+            color: "#fff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 22,
+            zIndex: 99999,
+            cursor: "pointer",
+          }}
+        >
+          Chạm để bật nhạc 🎵
+        </div>
+      )}
+
+      {/* Nút bật/tắt nhạc luôn hiện */}
+      <button
+        onClick={toggleMusic}
+        style={{
           position: "fixed",
           bottom: 20,
           left: 20,
@@ -91,8 +82,9 @@ export default function MusicAuto() {
           boxShadow: "0 6px 18px rgba(0,0,0,0.18)",
           background:  "rgba(255,255,255,0.5)",
         }}
-    >
-      {isPlaying ? "🔇" : "🎵"}
-    </button>
+      >
+        {isPlaying ? "🔇" : "🎵"}
+      </button>
+    </>
   );
 }
