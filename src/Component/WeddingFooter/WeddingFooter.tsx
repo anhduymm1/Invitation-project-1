@@ -13,7 +13,7 @@ export default function WeddingFooter() {
           <p>Quét mã để gửi lời chúc & mừng cưới đến đôi uyên ương</p>
         </div>
 
-        <img className="qr-img" src={'https://img.vietqr.io/image/vietinbank-113366668888-compact.jpg'} alt="QR Mừng cưới" />
+        <img className="qr-img" src={'https://img.vietqr.io/image/970415-106878864792-print.png?accountName=Nham%20My%20Oanh'} alt="QR Mừng cưới" />
 
         <p className="thanks">Xin chân thành cảm ơn 💖</p>
       </div>
